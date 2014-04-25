@@ -1,4 +1,4 @@
-#TravelPayouts HackDay City 2014 example APP
+#HackDay City 2014 TravelPayouts example APP
 ##Как запустить?
 
 - Добавьте в /etc/hosts строку
@@ -15,4 +15,5 @@
 https://www.travelpayouts.com/login
 
 Логин:  hackday-city-2014@travelpayouts.com
+
 Пароль: secret_password
