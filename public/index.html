@@ -5,12 +5,18 @@
     <title>HackDay City 2014 | TravelPayouts example APP</title>
     <meta name="description" content="HackDay City 2014 | TravelPayouts example APP">
     <meta name="author" content="TravelPayouts.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <style>
       body {
         padding: 20px;
         max-width: 1000px;
         margin: auto;
+      }
+      #gif_loader {
+        text-align: center;
       }
     </style>
   </head>
@@ -22,10 +28,34 @@
     <p>
       Мы объединим на одной площадке представителей технологических и креативных сообществ, общественных организаций и любых других инициативных объединений, которые хотят принимать участие в жизни города и верят в то, что современные информационные технологии могут помогать объединять людей, улучшать городскую среду и увеличивать эффективность работы городских организаций и служб.
     </p>
+
+    <h2>Как долететь</h2>
+    <h4 id="how-to-fly__prices">Цены на билеты</h4>
+    <div id="gif_loader"><img src="/loader.gif" alt="Загружаем цены..."/></div>
+
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/cities.js"></script>
+    <script src="/js/cities.js"></script> <!-- http://api.travelpayouts.com/data/cities.json -->
+    <script>
 
+      // Делайм Ajax запрос в API, чтобы получить цены в Санкт-Петербург на апрель 2014, сортируем по популярности маршрута
+      var url ='http://api.hackday-city.local/v2/prices/latest?destination=LED&period_type=month&sorting=route&beginning_of_period=2014-04-01&limit=20',
+          url_examples = '/latest_prices_example.json';
 
+      $.getJSON(url, function(data) {
+         // Выводим цены списком
+         var items = [];
+         $.each( data.data, function( key, val ) {
+           items.push( "<li class=\"col-lg-6 col-md-6\">" + TP_CITIES[val["origin"]] + " - " + TP_CITIES[val["destination"]] + " <strong class=\"pull-right\">" + val["value"] + " руб.</strong></li>" );
+         });
+
+         var list = $( "<ul/>", {
+           "class": "list-inline list-unstyled",
+           html: items.join( "" )
+         });
+         $('#gif_loader').remove();
+         $('#how-to-fly__prices').after(list);
+      });
+    </script>
   </body>
 </html>
