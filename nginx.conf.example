@@ -1,0 +1,19 @@
+server {
+  listen 80;
+  server_name api.hackday-city.local;
+
+  location / {
+    proxy_pass http://api.travelpayouts.com;
+    proxy_redirect off;
+    proxy_set_header Host api.travelpayouts.com;
+    proxy_set_header X-Access-Token YOUR_API_TOKEN; #Замените на апи токен вашего пользователя https://www.travelpayouts.com/developers/api
+  }
+}
+
+server {
+  listen 80;
+  server_name hackday-city.local;
+
+  root /path/to/hackday-city-2014/public; #Замените на путь до папки public приложения в вашей системе
+  index index.html;
+}
